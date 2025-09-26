@@ -11,7 +11,8 @@ setwd(wd)
 
 
 # -2- Read and combine all CSVs ------------------------------------------------------------
-csv_files <- list.files(path = wd, pattern = "\\.csv$", full.names = TRUE)
+csv_files <- list.files(path = wd, pattern = "\\.csv$", full.names = TRUE) %>%
+  str_sort(numeric = TRUE)
 
 # Creates a new dataframe which combines rows from each CSV based on the column
 df <- lapply(csv_files, function(file) {
