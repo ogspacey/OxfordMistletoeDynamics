@@ -22,6 +22,8 @@ trees_long_df <- read.csv("Oxford_Trees_Long.csv")
 trees_metadata_df <- read.csv("Oxford_Trees_Metadata_Wide.csv", header = TRUE) %>%
                      select(-starts_with("X"))
 
+# ADD IRENE'S DATA
+
 # Wrangle data ------------------------------------------------------------
 # Select relevant columns for analysis
 trees_sel_long_df <- select(trees_long_df,
@@ -93,6 +95,8 @@ ggplot(data = combined_df, aes(x = Height*DBH, y = Intensity)) +
 # Remove 0 counts
 combined_pos_df <- filter(combined_df, Intensity > 0)
 
+# Add in non-infected hosts to test for prevalence
+
 # Examine fit to truncated Poisson model
 fit_pois <- glmmTMB(
   Intensity ~ 1,
@@ -112,3 +116,28 @@ summary(fit_nb)
 # Compare AIC
 AIC(fit_pois, fit_nb)
 # Truncated NB model fits better!
+
+# SHOW PLOTS OF NB AND POISSON FIT
+
+# Impact of height
+ht_int_nb <- glmmTMB(
+  Intensity ~ Height,
+  family = truncated_nbinom2,
+  data = combined_pos_df
+)
+summary(ht_int_nb)
+
+
+
+# Impact of hosts on population-level processes -----------------------------------------------------
+# Test impact of host species and host size on recruitment, growth and fruiting
+
+
+# Individual-based model --------------------------------------------------
+# Define host-dependent processes
+
+# Define steps in model
+
+# Forecast with uncertainty
+
+
