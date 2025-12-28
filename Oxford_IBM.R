@@ -27,6 +27,8 @@ hst_coo_df <- read.csv("host_trees_bng_with_coords.csv") %>%
 # Join raw data and coordinates, and add indexing column
 oxf_hst_df <- full_join(raw_cen_df, hst_coo_df) 
 
+# Add in data for non-hosts of host species - randomly select
+
 # Generate host community ------------------------------------------------
 # Get number of hosts
 n <- nrow(hst_coo_df)
@@ -56,24 +58,28 @@ plot(hst_ntw)
 
 # Set parameters ----------------------------------------------------------
 # GO FROM HERE - GET THESE PARAMETERS
-
-
 # Set turnover rate - set to be constant, calculate from felling rate in dataset
 tno_rt <- 
   
-# Set rate of new infections - number of trees infested in t+1 not infested in t
-inf_rt <- 
+# Set initial rate of new infections/transmission probability - number of trees infested in t+1 not infested in t
+trm_rt <- 
+# Probability of seed being picked up from tree A, landing on tree B, germinating and establishing new infection
+# This parameter will be tweaked later for best fit
+# Use value estimated from IPM paper for now
   
 # Set parasite infestation growth rate - mean increase in parasite load, accounting for missed individuals
 gro_rt  <-
+# This parameter will later be dependent on host species 
+  
+# Set maximum intensity - from data - maximum observed * 10%
+max_it  <- 
   
 # Homogeneous model
 params <- c(tno_rt, # host turnover rate
-            inf_rt, # rate of new infections
-            gro_rt,  # rate of parasite infestation growth
-            trm_k   # transmission constant trm_probab = k / distance
+            trm_rt, # transmission probability (probability of new infection) trm_probab = trm_rt / distance
+            gro_rt, # rate of parasite infestation growth
+            
 )
-
 
 
 # Run model ---------------------------------------------------------------
@@ -81,8 +87,7 @@ params <- c(tno_rt, # host turnover rate
 
 # Each time-step
 
-
-
+# Randomly assign intensities for trees with "too many to count"
 
 # Output number of parasites on each host
 
